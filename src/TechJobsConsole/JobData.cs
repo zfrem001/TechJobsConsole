@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TechJobsConsole
 {
-    class JobData
+    class  JobData
     {
         static List<Dictionary<string, string>> AllJobs = new List<Dictionary<string, string>>();
         static bool IsDataLoaded = false;
@@ -38,6 +38,30 @@ namespace TechJobsConsole
             return values;
         }
 
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            LoadData();
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+            foreach (Dictionary<string, string> Zf in AllJobs)
+            {
+                foreach (string key in Zf.Keys)
+                {
+                    string searchItem = Zf[key];
+
+                    if (searchItem.ToLower().Contains(value.ToLower()))
+                    {
+                        jobs.Add(Zf);
+                        break;
+                    }
+                }
+            }
+
+
+            return jobs;
+        }
+
+
+
         public static List<Dictionary<string, string>> FindByColumnAndValue(string column, string value)
         {
             // load data, if not already loaded
@@ -49,7 +73,7 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
